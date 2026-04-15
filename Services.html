@@ -4,217 +4,440 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Services — Bunyonyi Paradise Resort</title>
+    <style>
+        :root {
+            --gold: #C9A84C; --gold-light: #E8D5A3; --gold-dark: #8B6914;
+            --forest: #1B3A2D; --forest-mid: #2D5A45; --forest-light: #4A7C65;
+            --cream: #F9F5EE; --cream-dark: #EDE4D3;
+            --dark: #0F1F18; --text: #2C2C2C; --text-light: #5A5A5A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
 
-    <title>Bunyonyi Paradise Resort</title>
+        nav.resort-nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(15,31,24,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold-light); line-height: 1.2; }
+        .nav-logo-sub { font-size: 0.6rem; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: rgba(201,168,76,0.6); }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
+        .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: rgba(249,245,238,0.75); text-decoration: none; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--gold-light); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--gold); }
+        .nav-book-btn { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--dark) !important; padding: 10px 22px; border-radius: 2px; font-weight: 600 !important; letter-spacing: 1.5px !important; }
+        .nav-book-btn::after { display: none !important; }
+        .nav-mobile-btn { display: none; background: none; border: none; color: var(--gold-light); cursor: pointer; padding: 8px; }
+        .mobile-menu { display: none; position: fixed; inset: 72px 0 0 0; background: rgba(15,31,24,0.98); z-index: 99; padding: 3rem 2rem; flex-direction: column; align-items: center; gap: 2rem; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a { font-size: 1.2rem; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); text-decoration: none; }
+        .mobile-menu a:hover { color: var(--gold); }
+
+        .page-hero { position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1600&q=80') center/cover no-repeat; }
+        .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,31,24,0.55), rgba(15,31,24,0.85)); }
+        .page-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 1.5rem; animation: heroFadeUp 1s ease both; }
+        @keyframes heroFadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .page-hero-content .breadcrumb { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+        .page-hero-content h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; color: #fff; line-height: 1.1; }
+        .page-hero-content h1 em { font-style: italic; color: var(--gold-light); }
+
+        .section-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--forest); line-height: 1.15; }
+        .section-title em { font-style: italic; color: var(--forest-mid); }
+        .section-divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 1.2rem 0; }
+        .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--dark); padding: 14px 32px; border: none; border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+
+        /* CAROUSEL HERO */
+        .carousel-section { background: var(--forest); padding: 5rem 2rem; }
+        .carousel-header { max-width: 600px; margin: 0 auto 3rem; text-align: center; }
+        .carousel-header .section-title { color: #fff; }
+        #default-carousel { max-width: 1100px; margin: 0 auto; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        #default-carousel .relative.h-56 { height: 460px !important; }
+        #default-carousel img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* SERVICES GRID */
+        .services-section { padding: 6rem 2rem; background: var(--cream); }
+        .services-inner { max-width: 1200px; margin: 0 auto; }
+        .services-grid { display: flex; flex-direction: column; gap: 4rem; margin-top: 3.5rem; }
+
+        .service-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .service-row.reverse { direction: rtl; }
+        .service-row.reverse > * { direction: ltr; }
+
+        .service-img { position: relative; border-radius: 4px; overflow: hidden; box-shadow: 0 12px 40px rgba(15,31,24,0.15); }
+        .service-img img { width: 100%; height: 320px; object-fit: cover; display: block; transition: transform 0.5s; }
+        .service-img:hover img { transform: scale(1.04); }
+        .service-img-badge { position: absolute; top: 1.5rem; left: 1.5rem; background: var(--forest); color: var(--gold-light); padding: 6px 14px; border-radius: 2px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+
+        .service-text .section-tag { margin-bottom: 0.5rem; }
+        .service-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 400; color: var(--forest); line-height: 1.2; margin-bottom: 1.2rem; }
+        .service-text h2 em { font-style: italic; color: var(--gold-dark); }
+        .service-text p { font-size: 0.9rem; color: var(--text-light); line-height: 1.8; font-weight: 300; margin-bottom: 1rem; }
+        .service-features { list-style: none; margin: 1.5rem 0 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+        .service-features li { font-size: 0.85rem; color: var(--text-light); display: flex; align-items: center; gap: 10px; }
+        .service-features li::before { content: '✓'; color: var(--gold); font-weight: 600; min-width: 16px; }
+
+        /* PRICING SECTION */
+        .pricing-section { padding: 6rem 2rem; background: var(--cream-dark); }
+        .pricing-inner { max-width: 1100px; margin: 0 auto; }
+        .pricing-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .pricing-card { background: var(--cream); border: 1px solid rgba(201,168,76,0.15); border-radius: 4px; padding: 2.5rem 2rem; text-align: center; position: relative; transition: transform 0.3s, box-shadow 0.3s; }
+        .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,31,24,0.12); }
+        .pricing-card.featured { background: var(--forest); border-color: var(--gold); }
+        .pricing-card.featured .pricing-name { color: var(--gold-light); }
+        .pricing-card.featured .pricing-price { color: #fff; }
+        .pricing-card.featured .pricing-period { color: rgba(255,255,255,0.5); }
+        .pricing-card.featured .pricing-feature { color: rgba(255,255,255,0.7); }
+        .pricing-card.featured .pricing-feature::before { color: var(--gold); }
+        .pricing-card.featured .btn-primary { background: var(--gold); }
+        .featured-tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--dark); font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; white-space: nowrap; }
+        .pricing-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .pricing-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--forest); margin-bottom: 0.5rem; }
+        .pricing-price { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--forest); line-height: 1; }
+        .pricing-period { font-size: 0.75rem; letter-spacing: 2px; color: var(--text-light); text-transform: uppercase; margin-bottom: 1.5rem; }
+        .pricing-divider { width: 40px; height: 1px; background: var(--gold); margin: 1.5rem auto; }
+        .pricing-features { list-style: none; margin-bottom: 2rem; text-align: left; }
+        .pricing-feature { font-size: 0.82rem; color: var(--text-light); padding: 0.5rem 0; display: flex; align-items: center; gap: 10px; }
+        .pricing-feature::before { content: '✓'; color: var(--gold); font-weight: 700; min-width: 16px; }
+
+        /* FOOTER */
+        footer.resort-footer { background: var(--dark); padding: 5rem 2rem 2rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+        .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 1.2rem; font-weight: 300; max-width: 280px; }
+        .footer-socials { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .footer-socials a { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.3); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.3s; }
+        .footer-socials a:hover { border-color: var(--gold); color: var(--gold); }
+        .footer-col h4 { font-size: 0.65rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a { font-size: 0.85rem; color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--gold-light); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.25); font-weight: 300; }
+        .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+        @media (max-width: 1024px) { .pricing-grid { grid-template-columns: 1fr 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .nav-mobile-btn { display: block; }
+            .service-row, .service-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
 </head>
 <body>
-    <!--------------header section--------------->
-    <header>
-        
-<nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
-        <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Flowbite</span>
-    </a>
-    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-default" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
-    </button>
-    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
-       
-        <li>
-          <a href="./index.html" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Home</a>
-        </li>
-        <li>
-          <a href="./About.html" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">About</a>
-        </li>
-        <li>
-          <a href="./Services.html" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Servics</a>
-        </li>
-        <li>
-          <a href="./Contact.html" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
-        </li>
-      </ul>
+
+    <nav class="resort-nav">
+        <div class="nav-inner">
+            <a href="./index.html" class="nav-logo">
+                <div class="nav-logo-icon">🌿</div>
+                <div><div class="nav-logo-text">Bunyonyi Paradise</div><div class="nav-logo-sub">Lake Resort · Uganda</div></div>
+            </a>
+            <button class="nav-mobile-btn" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
+            </button>
+            <ul class="nav-links">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./About.html">About</a></li>
+                <li><a href="./Services.html" class="active">Services</a></li>
+                <li><a href="./Contact.html">Contact</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="./index.html">Home</a>
+        <a href="./About.html">About</a>
+        <a href="./Services.html">Services</a>
+        <a href="./Contact.html">Contact</a>
+        <a href="./Contact.html" class="nav-book-btn">Book Now</a>
     </div>
-  </div>
-</nav>
 
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <p class="breadcrumb">Home → Services</p>
+            <h1>Our <em>Services</em> &<br>Experiences</h1>
+        </div>
+    </section>
 
-    </header>
-
-
-    <!---------main scetion---------------------->
     <main>
-<h1>Services</h1>
+        <!-- CAROUSEL -->
+        <section class="carousel-section">
+            <div class="carousel-header">
+                <span class="section-tag" style="color: var(--gold);">Discover What Awaits</span>
+                <h2 class="section-title" style="color: #fff; font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3rem); font-weight:300; line-height:1.15;">Every Moment,<br><em style="font-style:italic; color:var(--gold-light);">Perfectly Crafted</em></h2>
+            </div>
 
+            <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                <div class="relative h-56 overflow-hidden rounded-base md:h-96">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Lakeside activities">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Nature walks">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Accommodation">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Dining">
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Wellness">
+                    </div>
+                </div>
+                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                    <button type="button" class="w-3 h-3 rounded-base" aria-current="true" data-carousel-slide-to="0" style="background: var(--gold);"></button>
+                    <button type="button" class="w-3 h-3 rounded-base" data-carousel-slide-to="1" style="background: rgba(201,168,76,0.4);"></button>
+                    <button type="button" class="w-3 h-3 rounded-base" data-carousel-slide-to="2" style="background: rgba(201,168,76,0.4);"></button>
+                    <button type="button" class="w-3 h-3 rounded-base" data-carousel-slide-to="3" style="background: rgba(201,168,76,0.4);"></button>
+                    <button type="button" class="w-3 h-3 rounded-base" data-carousel-slide-to="4" style="background: rgba(201,168,76,0.4);"></button>
+                </div>
+                <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 group-hover:bg-white/50">
+                        <svg class="w-5 h-5 text-white rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/></svg>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 group-hover:bg-white/50">
+                        <svg class="w-5 h-5 text-white rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
+                    </span>
+                </button>
+            </div>
+        </section>
 
-<div id="default-carousel" class="relative w-full" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-base md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-1.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-2.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-3.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-4.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-5.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-    </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-base" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-    </div>
-    <!-- Slider controls -->
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-5 h-5 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/></svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-base bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-5 h-5 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
+        <!-- SERVICES LIST -->
+        <section class="services-section">
+            <div class="services-inner">
+                <div style="max-width: 600px; margin-bottom: 3.5rem;">
+                    <span class="section-tag">What We Offer</span>
+                    <h2 class="section-title">Tailored <em>Experiences</em><br>for Every Guest</h2>
+                    <div class="section-divider"></div>
+                    <p style="font-size: 0.95rem; color: var(--text-light); line-height: 1.8; font-weight: 300;">From the moment you arrive to the bittersweet farewell, every service is designed to immerse you in the magic of Lake Bunyonyi.</p>
+                </div>
 
+                <div class="services-grid">
+                    <!-- Service 1 -->
+                    <div class="service-row">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="Accommodation">
+                            <span class="service-img-badge">Accommodation</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">01 — Stay</span>
+                            <h2>Lakeside <em>Cottages</em> & Rooms</h2>
+                            <p>Wake up to the gentle sounds of the lake from your private cottage or room. Each space is designed to blend seamlessly with nature while providing every modern comfort.</p>
+                            <p>From romantic lake-view cottages to family-friendly suites, we have accommodation for every type of traveller.</p>
+                            <ul class="service-features">
+                                <li>Private lake-view verandas</li>
+                                <li>En-suite bathrooms with hot water</li>
+                                <li>Mosquito nets and ceiling fans</li>
+                                <li>Daily housekeeping service</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Book a Room <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
 
+                    <!-- Service 2 -->
+                    <div class="service-row reverse">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Dining">
+                            <span class="service-img-badge">Dining</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">02 — Taste</span>
+                            <h2>Restaurant & <em>Lakeside Bar</em></h2>
+                            <p>Our restaurant celebrates the rich flavours of Ugandan cuisine alongside international favourites. Fresh tilapia from the lake, locally grown vegetables, and expertly crafted cocktails await you.</p>
+                            <ul class="service-features">
+                                <li>Fresh-caught Lake Bunyonyi tilapia</li>
+                                <li>Traditional Ugandan dishes</li>
+                                <li>Lakeside dining & sunset cocktails</li>
+                                <li>Special dietary accommodations</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Make a Reservation <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
 
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
+                    <!-- Service 3 -->
+                    <div class="service-row">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Water activities">
+                            <span class="service-img-badge">Activities</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">03 — Explore</span>
+                            <h2>Water Sports & <em>Lake Activities</em></h2>
+                            <p>Lake Bunyonyi is one of East Africa's most beautiful lakes, and we give you every tool to explore it. From peaceful sunrise paddles to guided island-hopping tours, the lake is your playground.</p>
+                            <ul class="service-features">
+                                <li>Canoeing & kayaking hire</li>
+                                <li>Guided island-hopping tours</li>
+                                <li>Swimming & snorkelling areas</li>
+                                <li>Sunset boat cruises</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Learn More <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
 
+                    <!-- Service 4 -->
+                    <div class="service-row reverse">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Guided tours">
+                            <span class="service-img-badge">Tours</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">04 — Discover</span>
+                            <h2>Guided Tours & <em>Cultural Visits</em></h2>
+                            <p>Go beyond the resort with our expert local guides. Visit the 29 islands of Lake Bunyonyi, learn about the Bakiga culture, discover endemic bird species, and walk trails that few tourists ever see.</p>
+                            <ul class="service-features">
+                                <li>Bird watching with field guides</li>
+                                <li>Village & community cultural tours</li>
+                                <li>Hill hiking & nature walks</li>
+                                <li>Gorilla tracking transfers (Bwindi)</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Plan Your Tour <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
 
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
+                    <!-- Service 5 -->
+                    <div class="service-row">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Events">
+                            <span class="service-img-badge">Events</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">05 — Celebrate</span>
+                            <h2>Events & <em>Special Occasions</em></h2>
+                            <p>Whether you're planning a dream lakeside wedding, a corporate retreat, or a family celebration, our team will handle every detail to make it an unforgettable occasion against the stunning backdrop of Lake Bunyonyi.</p>
+                            <ul class="service-features">
+                                <li>Lakeside wedding venue & planning</li>
+                                <li>Corporate retreats & team building</li>
+                                <li>Private dining & celebrations</li>
+                                <li>Photography & videography packages</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Enquire Now <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
 
+                    <!-- Service 6 -->
+                    <div class="service-row reverse">
+                        <div class="service-img">
+                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg" alt="Wellness">
+                            <span class="service-img-badge">Wellness</span>
+                        </div>
+                        <div class="service-text">
+                            <span class="section-tag">06 — Restore</span>
+                            <h2>Wellness & <em>Relaxation</em></h2>
+                            <p>Let the healing energy of the lake restore you. Our wellness offerings combine traditional Ugandan therapies with modern relaxation techniques, all set against the most beautiful natural backdrop imaginable.</p>
+                            <ul class="service-features">
+                                <li>Lakeside massage & body treatments</li>
+                                <li>Yoga & meditation sessions</li>
+                                <li>Evening fire pit & star-gazing</li>
+                                <li>Digital detox packages</li>
+                            </ul>
+                            <a href="./Contact.html" class="btn-primary">Explore Wellness <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
-
-
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
-
-
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
-
-
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
-
-
-<a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-    <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src="/docs/images/blog/image-4.jpg" alt="">
-    <div class="flex flex-col justify-between md:p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">Streamlining your design process today.</h5>
-        <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-        <div>
-            <button type="button" class="inline-flex items-center w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Read more
-                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-            </button>
-        </div>
-    </div>
-</a>
-
+        <!-- PRICING -->
+        <section class="pricing-section">
+            <div class="pricing-inner">
+                <div class="pricing-header">
+                    <span class="section-tag">Rates & Packages</span>
+                    <h2 class="section-title">Choose Your <em>Perfect Stay</em></h2>
+                    <div class="section-divider" style="margin: 1.2rem auto;"></div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">All rates are per night and include breakfast. Contact us for custom packages and group rates.</p>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-icon">🌿</div>
+                        <div class="pricing-name">Garden Room</div>
+                        <div class="pricing-price">$85</div>
+                        <div class="pricing-period">per night</div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">Garden or courtyard view</li>
+                            <li class="pricing-feature">En-suite bathroom</li>
+                            <li class="pricing-feature">Breakfast included</li>
+                            <li class="pricing-feature">Free Wi-Fi</li>
+                            <li class="pricing-feature">Access to all facilities</li>
+                        </ul>
+                        <a href="./Contact.html" class="btn-primary" style="width: 100%; justify-content: center;">Book Now</a>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="featured-tag">Most Popular</div>
+                        <div class="pricing-icon">🌊</div>
+                        <div class="pricing-name">Lake View Cottage</div>
+                        <div class="pricing-price">$145</div>
+                        <div class="pricing-period">per night</div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">Private lake-view veranda</li>
+                            <li class="pricing-feature">King bed & luxury linens</li>
+                            <li class="pricing-feature">Breakfast & dinner included</li>
+                            <li class="pricing-feature">1x Canoe hire per day</li>
+                            <li class="pricing-feature">Late checkout available</li>
+                        </ul>
+                        <a href="./Contact.html" class="btn-primary" style="width: 100%; justify-content: center;">Book Now</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-icon">👑</div>
+                        <div class="pricing-name">Paradise Suite</div>
+                        <div class="pricing-price">$220</div>
+                        <div class="pricing-period">per night</div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">Panoramic 180° lake views</li>
+                            <li class="pricing-feature">Private plunge pool</li>
+                            <li class="pricing-feature">All meals included</li>
+                            <li class="pricing-feature">Daily guided activity</li>
+                            <li class="pricing-feature">Butler & concierge service</li>
+                        </ul>
+                        <a href="./Contact.html" class="btn-primary" style="width: 100%; justify-content: center;">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-
-    <!---------------------footer section--------------->
-    <footer>
-
+    <footer class="resort-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="./index.html" class="nav-logo" style="text-decoration:none;">
+                        <div class="nav-logo-icon">🌿</div>
+                        <div><div class="nav-logo-text">Bunyonyi Paradise</div><div class="nav-logo-sub">Lake Resort · Uganda</div></div>
+                    </a>
+                    <p>A peaceful sanctuary on the shores of Lake Bunyonyi in southwestern Uganda.</p>
+                    <div class="footer-socials">
+                        <a href="#"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/></svg></a>
+                        <a href="#"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col"><h4>Navigation</h4><ul><li><a href="./index.html">Home</a></li><li><a href="./About.html">About</a></li><li><a href="./Services.html">Services</a></li><li><a href="./Contact.html">Contact</a></li></ul></div>
+                <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Accommodation</a></li><li><a href="#">Restaurant</a></li><li><a href="#">Water Sports</a></li><li><a href="#">Guided Tours</a></li><li><a href="#">Events & Weddings</a></li></ul></div>
+                <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Lake Bunyonyi, Kabale, Uganda</a></li><li><a href="mailto:info@bunyonyiparadise.com">info@bunyonyiparadise.com</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 <a href="./index.html">Bunyonyi Paradise Resort™</a>. All Rights Reserved.</p>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.15);">Designed with ❤ for Lake Bunyonyi</p>
+            </div>
+        </div>
     </footer>
 
-
-
-    
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-
 </body>
 </html>
